@@ -20,28 +20,7 @@ interface ItemResponse {
 
 1. **Troba el patró:** Veiem que `statusCode` (i la pròpia estructura d'embolcall) es repeteix totalment igual i en sincronia. El que realment és mutant és el tipus inserit a `data`.
 2. **Crea la "Caixa Base" (La Interfície Genèrica):**
-   ```ts
-   // Posem la dada `<T>` que anirà directa al camp mutable.
-   interface ApiResponse<T> {
-     statusCode: number;
-     message?: string; // Fem que sigui opcional enviar missatge d'error
-     data: T;          // Connectem el contingut T aquí sota.
-   }
-   ```
 3. **Aplica-ho magistralment:** Aïllarem els tipus de les dures dades i ens limitarem a unir parts. Així faràs que tot resulti hiper-elegant.
-   ```ts
-   interface Player { username: string; level: number; }
-   interface Item { itemName: string; durability: number; }
-
-   let playerRes: ApiResponse<Player>;
-   let itemRes: ApiResponse<Item>;
-   
-   // A més a més et serveix per coses senzilles gairebé en cru sense crear de noves!
-   let deleteOperation: ApiResponse<boolean> = { 
-     statusCode: 200, 
-     data: true 
-   };
-   ```
 
 > [!TIP] EL CONSELL DE L'EXPERT
 > Aquest és **el costum i model més comú** com a programador Full-Stack o Front-end: Mai no desxifraràs una API escrivint un únic model pel lliureament. Empreu les *Response Envelopes Generics* (`ApiResponse<T>`).
